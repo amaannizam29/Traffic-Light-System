@@ -149,3 +149,11 @@ Timing issues: Adjust the delays in the code to match desired timings.
 Add sensors for automatic vehicle detection.
 Implement a night mode with flashing yellow lights.
 Integrate IoT modules for remote monitoring.
+
+
+----
+
+The blueprint , circuit and code has been uploaded above
+The same circuit can be used to make a basic trafic system also without the functionality of Buzzer and The extra Indicator light for that the file basic-circuit & basic-code has been uploaded
+
+Thanks For Reading
