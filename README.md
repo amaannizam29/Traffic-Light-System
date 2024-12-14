@@ -9,6 +9,7 @@ Pedestrian light transitions through red, green, and blue.
 Buzzer rings continuously during the pedestrian green light.
 Automatic reset to default state after the cycle.
 Designed to simulate real-world traffic control behavior.
+
 Components Required
 1 x Arduino Uno
 2 x RGB LEDs
@@ -18,7 +19,9 @@ Components Required
 8 x 220Ω Resistors
 1 x 10kΩ Resistor (for button pull-up)
 Breadboard and Jumper Wires
+
 Step-by-Step Guide
+
 1. Circuit Assembly
 Follow this table to connect the components:
 
@@ -32,6 +35,7 @@ Pedestrian Blue LED	Pin 3	Resistor → LED Anode	220Ω resistor, Cathode → GND
 Pedestrian Request LED	Pin 4	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
 Buzzer	Pin 7	Positive → Pin 7, Negative → GND	Ensure polarity is correct.
 Push Button	Pin 2	1a → Pin 2, 2a → GND rail	Use a 10kΩ pull-up resistor between 1a and 5V.
+
 2. Upload the Code
 Connect your Arduino to your computer via USB.
 Open the Arduino IDE and paste the following code:
@@ -123,8 +127,10 @@ void handlePedestrianRequest() {
   digitalWrite(carGreen, HIGH);
 }
 -----------------------------------------------------------
+
 Click Upload in the Arduino IDE.
 Open the Serial Monitor if needed for debugging.
+
 3. Test the Circuit
 Power on the Arduino.
 Observe the following behavior:
@@ -132,11 +138,13 @@ Car light is green, and pedestrian light is red by default.
 Press the button to start the pedestrian crossing sequence.
 Check the buzzer, light transitions, and timing.
 Verify the system resets after the cycle.
+
 4. Troubleshooting
 LEDs not lighting up: Check the connections and ensure resistors are properly placed.
 Buzzer not working: Ensure the buzzer polarity matches the wiring.
 No response to the button: Verify the pull-up resistor and button connections.
 Timing issues: Adjust the delays in the code to match desired timings.
+
 5. How to Expand
 Add sensors for automatic vehicle detection.
 Implement a night mode with flashing yellow lights.
