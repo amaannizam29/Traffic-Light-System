@@ -1,159 +1,134 @@
-This project simulates a real-world traffic light system using Arduino, RGB LEDs, a push button, and a buzzer. The system mimics the functionality of German traffic lights, allowing pedestrians to request a green light while prioritizing car traffic by default.
+This repository contains two versions of an Arduino-based traffic light system. Both simulate real-world traffic light behavior, but with varying levels of functionality to suit different project requirements and complexity levels.
+
+Overview
+
+Basic Traffic Light System:
+
+A simple implementation of a traffic light system using an Arduino and RGB LEDs.
+Focuses on controlling car and pedestrian lights with realistic transitions.
+No additional buzzer or pedestrian request LED.
+
+Advanced Traffic Light System:
+
+Adds features to simulate a more realistic German-style traffic light system.
+Includes a buzzer for pedestrian crossings and a request LED that lights up when the pedestrian button is pressed.
+Both versions are fully documented with circuit diagrams, code files, and descriptions for easy setup.
+
 
 Features
-Car traffic light stays green by default.
-Pedestrian button request with an LED indicator.
-Realistic traffic light transitions with delays:
-Car light transitions through green, blue (yellow simulation), and red.
-Pedestrian light transitions through red, green, and blue.
-Buzzer rings continuously during the pedestrian green light.
-Automatic reset to default state after the cycle.
-Designed to simulate real-world traffic control behavior.
+Basic Traffic Light System
+Simulates car and pedestrian traffic lights.
+Default behavior:
+Car light is green.
+Pedestrian light is red.
+Simple light transitions:
+Car light switches to red when the pedestrian light turns green.
+Lights reset to default state after the pedestrian cycle.
+Advanced Traffic Light System
+Includes all features from the basic system.
+Buzzer Integration:
+Rings continuously while the pedestrian light is green.
+Pedestrian Request LED:
+Lights up when a pedestrian presses the button.
+Turns off when the pedestrian light turns green.
+Realistic transitions and delays:
+Follows a German-style traffic light system with clear delays between light states.
+Automatic reset after the pedestrian cycle.
+Repository Structure
+
+File	Description
+basic-code.ino	Arduino code for the basic traffic light system.
+basic-circuit.png	Circuit diagram for the basic traffic light system.
+advanced-code.ino	Arduino code for the advanced traffic light system with buzzer and request LED.
+Advanced-Circuit.png	Circuit diagram for the advanced traffic light system.
+Advanced-Circuit-Detailed.pdf	A detailed blueprint of the advanced circuit.
 
 Components Required
+Basic System
 1 x Arduino Uno
 2 x RGB LEDs
+7 x 220Ω Resistors
 1 x Push Button
+Breadboard and Jumper Wires
+Advanced System
+All components from the basic system plus:
 1 x LED (for pedestrian request indication)
 1 x Buzzer
-8 x 220Ω Resistors
-1 x 10kΩ Resistor (for button pull-up)
-Breadboard and Jumper Wires
+1 x 10kΩ Resistor (for pull-up on the button)
 
-Step-by-Step Guide
+How to Build
+1. Basic Traffic Light System
+Refer to the circuit diagram (basic-circuit.png) to wire your components:
+Use RGB LEDs for car and pedestrian lights.
+Connect resistors to limit current to the LEDs.
+Wire the push button with a pull-up resistor.
+Upload the basic-code.ino file to your Arduino.
+Observe the behavior:
+The car light is green by default.
+When the button is pressed, the car light transitions to red, and the pedestrian light turns green.
+The system resets to the default state after the pedestrian cycle.
 
-1. Circuit Assembly
-Follow this table to connect the components:
+2. Advanced Traffic Light System
+Refer to the detailed circuit diagram (Advanced-Circuit.png or Advanced-Circuit-Detailed.pdf) to wire your components:
+Add the buzzer and request LED as shown in the diagram.
+Use RGB LEDs for car and pedestrian lights.
+Connect resistors to protect the LEDs.
+Wire the push button with a pull-up resistor.
+Upload the advanced-code.ino file to your Arduino.
 
-Component	Arduino Pin	Breadboard Connection	Other Notes
-Car Red LED	Pin 9	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Car Green LED	Pin 10	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Car Blue LED	Pin 11	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Pedestrian Red LED	Pin 6	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Pedestrian Green LED	Pin 5	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Pedestrian Blue LED	Pin 3	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Pedestrian Request LED	Pin 4	Resistor → LED Anode	220Ω resistor, Cathode → GND rail
-Buzzer	Pin 7	Positive → Pin 7, Negative → GND	Ensure polarity is correct.
-Push Button	Pin 2	1a → Pin 2, 2a → GND rail	Use a 10kΩ pull-up resistor between 1a and 5V.
+Observe the behavior:
+The car light is green, and the pedestrian light is red by default.
 
-2. Upload the Code
-Connect your Arduino to your computer via USB.
-Open the Arduino IDE and paste the following code:
-cpp
+When the button is pressed:
+The pedestrian request LED lights up.
+The car light transitions from green to blue (yellow simulation) and then to red.
+The pedestrian light turns green, and the buzzer rings continuously for the duration of the pedestrian green light.
+After the pedestrian light turns blue (prepare to stop), it switches back to red, and the car light transitions back to green.
+The system automatically resets after the cycle.
+Timing Details (Advanced System)
 
------------------------------------------------------------------------------------------
-// Pin definitions for Car Traffic Lights
-int carRed = 9;
-int carGreen = 10;
-int carBlue = 11;
+Default State:
+Car: Green
+Pedestrian: Red
+Button Press:
+After 3 seconds: Car light turns blue (yellow simulation).
+After another 2 seconds: Car light turns red, and pedestrian light turns green (buzzer rings).
+After 3 seconds: Pedestrian light turns blue (prepare to stop).
+After 2 seconds: Pedestrian light turns red, and car light turns blue (prepare to go).
+After 2 seconds: Car light turns green.
 
-// Pin definitions for Pedestrian Traffic Lights
-int pedRed = 6;
-int pedGreen = 5;
-int pedBlue = 3;
+How to Test
+Assemble the Circuit:
+Use the diagrams to connect the components correctly.
+Upload the Code:
+Select either the basic-code.ino or advanced-code.ino file based on your setup.
+Test the Default State:
+Car light should be green, and pedestrian light should be red.
+Press the Button:
+For the basic system, observe the light transitions.
+For the advanced system, check the request LED, buzzer, and realistic transitions.
 
-// Additional components
-int requestLED = 4;  // Pedestrian request LED
-int buzzer = 7;      // Buzzer for pedestrian light
-int buttonPin = 2;   // Button pin for pedestrians
+Verify Reset:
+Ensure the system resets to the default state after completing the cycle.
 
-void setup() {
-  // Set all LED pins as output
-  pinMode(carRed, OUTPUT);
-  pinMode(carGreen, OUTPUT);
-  pinMode(carBlue, OUTPUT);
-  pinMode(pedRed, OUTPUT);
-  pinMode(pedGreen, OUTPUT);
-  pinMode(pedBlue, OUTPUT);
-  pinMode(requestLED, OUTPUT);
-  pinMode(buzzer, OUTPUT);
+Troubleshooting
+LEDs not lighting up:
+Verify connections and resistor placements.
+Button not working:
+Check the pull-up resistor and button wiring.
+Buzzer not ringing:
+Ensure correct polarity for the buzzer.
+Timing issues:
+Adjust delays in the code for your desired timings.
 
-  // Set button pin as input with pull-up
-  pinMode(buttonPin, INPUT_PULLUP);
+How to Expand
+Night Mode:
+Flash yellow lights for cars and turn off pedestrian signals during low traffic hours.
+Automatic Detection:
+Add sensors for car and pedestrian detection.
+IoT Integration:
+Monitor and control the system remotely via Wi-Fi or Bluetooth.
 
-  // Initialize default state
-  digitalWrite(carGreen, HIGH);  // Cars green
-  digitalWrite(pedRed, HIGH);    // Pedestrians red
-  digitalWrite(requestLED, LOW); // Request LED off
-}
+Thanks for Checking Out the Project!
+This repository contains everything you need to build both the basic and advanced versions of the Arduino traffic light system. Feel free to contribute or modify the project as needed! 🚦
 
-void loop() {
-  if (digitalRead(buttonPin) == LOW) {
-    handlePedestrianRequest();
-  }
-}
-
-void handlePedestrianRequest() {
-  // Turn on pedestrian request LED
-  digitalWrite(requestLED, HIGH);
-
-  // Step 1: After 3 seconds, car light transitions to blue
-  delay(3000);
-  digitalWrite(carGreen, LOW);
-  digitalWrite(carBlue, HIGH);
-
-  // Step 2: After 2 seconds, car light turns red and pedestrian light turns green
-  delay(2000);
-  digitalWrite(carBlue, LOW);
-  digitalWrite(carRed, HIGH);
-  digitalWrite(pedRed, LOW);
-  digitalWrite(pedGreen, HIGH);
-
-  // Turn off pedestrian request LED
-  digitalWrite(requestLED, LOW);
-
-  // Step 3: Buzzer rings while pedestrian light is green
-  for (int i = 0; i < 15; i++) {  // 15 short beeps for 3 seconds
-    digitalWrite(buzzer, HIGH);
-    delay(100);  // Buzzer ON for 100ms
-    digitalWrite(buzzer, LOW);
-    delay(100);  // Buzzer OFF for 100ms
-  }
-
-  // Step 4: Pedestrian light transitions from green to blue
-  digitalWrite(pedGreen, LOW);
-  digitalWrite(pedBlue, HIGH);
-  delay(2000);
-
-  // Step 5: Pedestrian light turns red, car light turns blue
-  digitalWrite(pedBlue, LOW);
-  digitalWrite(pedRed, HIGH);
-  digitalWrite(carRed, LOW);
-  digitalWrite(carBlue, HIGH);
-  delay(2000);
-
-  // Step 6: Car light turns green
-  digitalWrite(carBlue, LOW);
-  digitalWrite(carGreen, HIGH);
-}
------------------------------------------------------------
-
-Click Upload in the Arduino IDE.
-Open the Serial Monitor if needed for debugging.
-
-3. Test the Circuit
-Power on the Arduino.
-Observe the following behavior:
-Car light is green, and pedestrian light is red by default.
-Press the button to start the pedestrian crossing sequence.
-Check the buzzer, light transitions, and timing.
-Verify the system resets after the cycle.
-
-4. Troubleshooting
-LEDs not lighting up: Check the connections and ensure resistors are properly placed.
-Buzzer not working: Ensure the buzzer polarity matches the wiring.
-No response to the button: Verify the pull-up resistor and button connections.
-Timing issues: Adjust the delays in the code to match desired timings.
-
-5. How to Expand
-Add sensors for automatic vehicle detection.
-Implement a night mode with flashing yellow lights.
-Integrate IoT modules for remote monitoring.
-
-
-----
-
-The blueprint , circuit and code has been uploaded above
-The same circuit can be used to make a basic trafic system also without the functionality of Buzzer and The extra Indicator light for that the file basic-circuit & basic-code has been uploaded
-
-Thanks For Reading
